@@ -133,7 +133,7 @@ public class Parser {
        
 
         System.out.println("Str length"+str.length());
-        if ((cur <= str.length()) && (str.charAt(cur) == c)) {
+        if ((cur < str.length()) && (str.charAt(cur) == c)) {
             
             System.out.println("Lit le caractère : "+c);
             System.out.println("Last char : "+lastChar);
