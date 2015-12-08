@@ -11,5 +11,5 @@ package calculatricegraphique;
  */
 public abstract class EXPR {
 
-    public abstract int eval();
+    public abstract double eval();
 }

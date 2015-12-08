@@ -15,7 +15,7 @@ public class NEG extends Unary {
         right = e;
     }
 
-    public int eval() {
+    public double eval() {
         return (-right.eval());
     }
 }

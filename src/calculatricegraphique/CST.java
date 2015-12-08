@@ -17,7 +17,7 @@ public class CST extends EXPR {
         this.value = value;
     }
 
-    public int eval() {
+    public double eval() {
         return value;
     }
 }

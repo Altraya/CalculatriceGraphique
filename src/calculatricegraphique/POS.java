@@ -15,8 +15,8 @@ public class POS extends Unary {
         right = e;
     }
 
-    public int eval() {
-        int e = right.eval();
+    public double eval() {
+        double e = right.eval();
         if (e >= 0) {
             return e;
         } else {

@@ -16,7 +16,7 @@ public class ADD extends Binary {
         right = e2;
     }
 
-    public int eval() {
+    public double eval() {
         return left.eval() + right.eval();
     }
 }
