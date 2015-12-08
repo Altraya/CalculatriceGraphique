@@ -16,6 +16,7 @@ public class MUL extends Binary {
         right = e2;
     }
 
+    @Override
     public int eval() {
         return left.eval() * right.eval();
     }
