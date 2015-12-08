@@ -99,44 +99,48 @@ public class Parser {
 
     public static EXPR read_cst() {
         System.out.println("Read constante");
-        EXPR right, result;
-        int chiffre;
+        EXPR right, result = null;
+        String chiffre = "";
+        System.out.println("Last char dans read cst : "+lastChar);
         if(read_char('('))
         {
             while(!read_char(')'))
             {
-                right = read_e();
+                result = read_e();
             }
+        }else{
+            while(read_char('0') ||
+                    read_char('1') ||
+                    read_char('2') ||
+                    read_char('3') ||
+                    read_char('4') ||
+                    read_char('5') ||
+                    read_char('6') ||
+                    read_char('7') ||
+                    read_char('8') ||
+                    read_char('9')
+            ){
+                System.out.println("Je passe dans le while o/");
+                chiffre += lastChar;
+            }
+            System.out.println("Chiffre = "+chiffre);
+            result = new CST(Integer.parseInt(chiffre));
         }
-        while(read_char('0') ||
-                read_char('1') ||
-                read_char('2') ||
-                read_char('3') ||
-                read_char('4') ||
-                read_char('5') ||
-                read_char('6') ||
-                read_char('7') ||
-                read_char('8') ||
-                read_char('9')
-        ){
-            System.out.println("Je passe dans le while o/");
-            chiffre = lastChar;
-        }
-        result = new CST();
         return result;
     }
 
     public static boolean read_char(char c) {
-        System.out.println("Lit le caractère : "+c);
-        System.out.println("Last char : "+lastChar);
-        System.out.println("Cur : "+cur);
+       
 
         System.out.println("Str length"+str.length());
         if ((cur <= str.length()) && (str.charAt(cur) == c)) {
-            lastChar = c;
-            cur++;
+            
+            System.out.println("Lit le caractère : "+c);
             System.out.println("Last char : "+lastChar);
             System.out.println("Cur : "+cur);
+        
+            lastChar = c;
+            cur++;
             return true;
         } else {
             return false;

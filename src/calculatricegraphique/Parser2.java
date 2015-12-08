@@ -9,15 +9,11 @@ package calculatricegraphique;
  *
  * @author Karakayn
  */
-public class CST extends EXPR {
-
-    public int value;
+public class Parser2 {
+    private String str;
+    private int cur;
     
-    public CST(int value){
-        this.value = value;
-    }
-
-    public int eval() {
-        return value;
+    public Parser2(String str){
+        this.str = str;
     }
 }
