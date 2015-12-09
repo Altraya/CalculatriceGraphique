@@ -11,6 +11,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,6 +56,8 @@ public class Calculatrice extends JFrame {
         //On définit la police d'écriture à utiliser
         Font police = new Font("Arial", Font.BOLD, 20);
         ecran = new JLabel("0");
+        //ecran.getInputMap().put(KeyStroke.getKeyStroke("F2"),
+                            //"doNothing"); @TODO
         ecran.setFont(police);
         //On aligne les informations à droite dans le JLabel
         ecran.setHorizontalAlignment(JLabel.RIGHT);
@@ -70,8 +74,7 @@ public class Calculatrice extends JFrame {
         for (int i = 0; i < tab_string.length; i++) {
             tab_button[i] = new JButton(tab_string[i]);
             tab_button[i].setPreferredSize(dim);
-            
-            
+
             switch (i) {
                 //Pour chaque élément situé à la fin du tableau
                 //et qui n'est pas un chiffre
@@ -128,19 +131,21 @@ public class Calculatrice extends JFrame {
 
     //Listener utilisé pour recevoir l'expression
     class ExprListener implements ActionListener {
-        public void actionPerformed(ActionEvent e){
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
             String str = ((JButton) e.getSource()).getText();
             if (update) {
                 update = false;
                 System.out.println("Passe update a false");
             } else if (!ecran.getText().equals("0")) {
-                System.out.println("Set le texte ? +"+ecran.getText());
+                System.out.println("Set le texte ? +" + ecran.getText());
                 str = ecran.getText() + str;
             }
-            
+
             System.out.println("Dans expression listener");
             expression = str;
-            System.out.println("expr : "+expression);
+            System.out.println("expr : " + expression);
             ecran.setText(str);
         }
     }
@@ -156,7 +161,7 @@ public class Calculatrice extends JFrame {
             e = Parser.on(expression);
             System.out.println("Result = " + e.eval());
             resultPrec = e.eval();
-            ecran.setText(""+e.eval());
+            ecran.setText("" + e.eval());
         }
     }
 
