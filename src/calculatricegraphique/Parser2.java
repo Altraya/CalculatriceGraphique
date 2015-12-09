@@ -10,10 +10,11 @@ package calculatricegraphique;
  * @author Karakayn
  */
 public class Parser2 {
+
     private String str;
     private int cur;
-    
-    public Parser2(String str){
+
+    public Parser2(String str) {
         this.str = str;
     }
 }

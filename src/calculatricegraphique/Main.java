@@ -17,13 +17,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        EXPR e;
-        System.out.println("Ecrire une expression :");
-        Scanner sc = new Scanner(System.in);
-        String expression = sc.nextLine();
-        System.out.println("Expression : "+expression);
-        e = Parser.on(expression);
-        System.out.println("Result = " + e.eval());
+        Calculatrice cal = new Calculatrice();
+
+
     }
 
 }
