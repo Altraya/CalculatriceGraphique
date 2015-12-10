@@ -38,12 +38,10 @@ public class Calculatrice extends JFrame implements KeyListener {
     private JLabel ecran = new JLabel();
     private Dimension dim = new Dimension(50, 40);
     private Dimension dim2 = new Dimension(50, 31);
-    /*
     private double chiffre1;
     private double resultPrec = 0; //Sert quand on a deja fait un calcul et qu'on remet un operateur derrière pour continuer
     private boolean clicOperateur = false, update = false;
     private String operateur = "";
-    */
     private String expression = ""; //continent l'expression entiere entrée par l'utilisateur
 
     public Calculatrice() {
@@ -85,8 +83,7 @@ public class Calculatrice extends JFrame implements KeyListener {
         for (int i = 0; i < tab_string.length; i++) {
             tab_button[i] = new JButton(tab_string[i]);
             tab_button[i].setPreferredSize(dim);
-            
-            // On veut que le focus soit sur la Window et pas sur le bouton.
+             // On veut que le focus soit sur la Window et pas sur le bouton
             tab_button[i].setFocusable(false);
             
             switch (i) {
