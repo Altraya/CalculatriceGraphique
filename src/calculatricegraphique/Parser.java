@@ -119,7 +119,7 @@ public class Parser {
                     || read_char('9')
                     || read_char('.')
                     ) {
-                System.out.println("Je passe dans le while o/");
+                //System.out.println("Je passe dans le while o/");
                 chiffre += lastChar;
             }
             System.out.println("Chiffre = " + chiffre);
