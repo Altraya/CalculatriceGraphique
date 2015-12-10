@@ -32,16 +32,18 @@ public class Calculatrice extends JFrame implements KeyListener {
     // Tableau avec les éléments permis par une écriture sur clavier
     String[] allowed_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "+", "-", "*", "/"};
     // Signes
-    String[] signs_string = {"+", "-", "*", "/"};
+    String[] signs_string = {"+", "-", "*", "/", "."};
     //Un bouton par élément à afficher
     JButton[] tab_button = new JButton[tab_string.length];
     private JLabel ecran = new JLabel();
     private Dimension dim = new Dimension(50, 40);
     private Dimension dim2 = new Dimension(50, 31);
+    /*
     private double chiffre1;
     private double resultPrec = 0; //Sert quand on a deja fait un calcul et qu'on remet un operateur derrière pour continuer
     private boolean clicOperateur = false, update = false;
     private String operateur = "";
+    */
     private String expression = ""; //continent l'expression entiere entrée par l'utilisateur
 
     public Calculatrice() {
@@ -56,7 +58,7 @@ public class Calculatrice extends JFrame implements KeyListener {
         this.setContentPane(container);
         this.setVisible(true);
         
-        // On met le container comme listener
+        // On met le container comme listener de clavier
         container.addKeyListener(this);
         container.setFocusable(true);
 
@@ -67,8 +69,6 @@ public class Calculatrice extends JFrame implements KeyListener {
         //On définit la police d'écriture à utiliser
         Font police = new Font("Arial", Font.BOLD, 20);
         ecran = new JLabel("0");
-        //ecran.getInputMap().put(KeyStroke.getKeyStroke("F2"),
-                            //"doNothing"); @TODO
         ecran.setFont(police);
         //On aligne les informations à droite dans le JLabel
         ecran.setHorizontalAlignment(JLabel.RIGHT);
@@ -85,6 +85,8 @@ public class Calculatrice extends JFrame implements KeyListener {
         for (int i = 0; i < tab_string.length; i++) {
             tab_button[i] = new JButton(tab_string[i]);
             tab_button[i].setPreferredSize(dim);
+            
+            // On veut que le focus soit sur la Window et pas sur le bouton.
             tab_button[i].setFocusable(false);
             
             switch (i) {
@@ -177,7 +179,6 @@ public class Calculatrice extends JFrame implements KeyListener {
         }
         else if (e.getKeyCode()==KeyEvent.VK_ENTER){
             System.out.println("enter event");
-            //update = true;
             clicOperateur = false;
             EXPR exp;
             System.out.println("Expression : " + expression);
@@ -217,7 +218,6 @@ public class Calculatrice extends JFrame implements KeyListener {
     class EgalListener implements ActionListener {
 
         public void actionPerformed(ActionEvent arg0) {
-            //update = true;
             clicOperateur = false;
             EXPR e;
             System.out.println("Expression : " + expression);
