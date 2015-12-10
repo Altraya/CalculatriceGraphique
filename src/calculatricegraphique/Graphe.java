@@ -39,7 +39,7 @@ public class Graphe extends JApplet {
         g2.draw(new Line2D.Double(origin,y_grid));
         Point2D.Double point = new Point2D.Double(0,0);
 
-        for(double i = 0; i < 5000; i++)
+        for(double i = 0; i < 6000; i++)
         {
             point.setLocation(i/5,10*computeFunction(i/20));
             coord(point);
@@ -49,7 +49,7 @@ public class Graphe extends JApplet {
     
     public double computeFunction(double x)
     {
-        return 10+(2+x/200)*Math.sin(x)+x*x/1000;
+        return 10+(1+x/40)*Math.sin(Math.pow(x, 0.92))+x*x/1000;
     }
  
 }
