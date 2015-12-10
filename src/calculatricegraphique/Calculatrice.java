@@ -175,7 +175,6 @@ public class Calculatrice extends JFrame implements KeyListener {
             ecran.setText(str);
         }
         else if (e.getKeyCode()==KeyEvent.VK_ENTER){
-            System.out.println("enter event");
             clicOperateur = false;
             EXPR exp;
             System.out.println("Expression : " + expression);
@@ -183,7 +182,13 @@ public class Calculatrice extends JFrame implements KeyListener {
             System.out.println("Result = " + exp.eval());
             resultPrec = exp.eval();
             ecran.setText("" + exp.eval());             
-        }         
+        } 
+        else if (e.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+            String prev = ecran.getText();
+            prev = prev.substring(0, prev.length() - 1);
+            expression = prev;
+            ecran.setText(prev);      
+        }        
     }
     
     @Override
