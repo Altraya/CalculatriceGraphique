@@ -31,6 +31,8 @@ public class Calculatrice extends JFrame implements KeyListener {
     String[] tab_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "=", "C", "+", "-", "*", "/"};
     // Tableau avec les éléments permis par une écriture sur clavier
     String[] allowed_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "+", "-", "*", "/"};
+    // Signes
+    String[] signs_string = {"+", "-", "*", "/"};
     //Un bouton par élément à afficher
     JButton[] tab_button = new JButton[tab_string.length];
     private JLabel ecran = new JLabel();
@@ -139,6 +141,20 @@ public class Calculatrice extends JFrame implements KeyListener {
         container.add(operateur, BorderLayout.EAST);
     }
     
+    public String handleStringAdd(String in)
+    {
+        String previousText = ecran.getText();
+        if(!previousText.isEmpty())
+        {
+            char lastChar = previousText.charAt(previousText.length()-1);
+            String lastCharString = Character.toString(lastChar);
+            // Avoid twice a sign
+            if (Arrays.asList(signs_string).contains(lastCharString) && Arrays.asList(signs_string).contains(in))
+                previousText = previousText.substring(0, previousText.length() - 1);
+        }
+        return previousText + in;
+    }
+    
     // Listener attribute for key press
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -148,7 +164,7 @@ public class Calculatrice extends JFrame implements KeyListener {
         String typedString = String.valueOf(e.getKeyChar());
         if (Arrays.asList(allowed_string).contains(typedString))
         {
-            String str = ecran.getText() + typedString;
+            String str = handleStringAdd(typedString);
             if (update) {
                 update = false;
                 System.out.println("Passe update a false");
@@ -161,7 +177,7 @@ public class Calculatrice extends JFrame implements KeyListener {
         }
         else if (e.getKeyCode()==KeyEvent.VK_ENTER){
             System.out.println("enter event");
-            update = true;
+            //update = true;
             clicOperateur = false;
             EXPR exp;
             System.out.println("Expression : " + expression);
@@ -187,7 +203,7 @@ public class Calculatrice extends JFrame implements KeyListener {
                 System.out.println("Passe update a false");
             } else if (!ecran.getText().equals("0")) {
                 System.out.println("Set le texte ? +" + ecran.getText());
-                str = ecran.getText() + str;
+                str = handleStringAdd(str);
             }
 
             System.out.println("Dans expression listener");
@@ -201,7 +217,7 @@ public class Calculatrice extends JFrame implements KeyListener {
     class EgalListener implements ActionListener {
 
         public void actionPerformed(ActionEvent arg0) {
-            update = true;
+            //update = true;
             clicOperateur = false;
             EXPR e;
             System.out.println("Expression : " + expression);
