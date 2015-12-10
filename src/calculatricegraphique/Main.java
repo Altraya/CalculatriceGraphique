@@ -5,7 +5,12 @@
  */
 package calculatricegraphique;
 
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Scanner;
+import javax.swing.JApplet;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,8 +23,14 @@ public class Main {
      */
     public static void main(String[] args) {
         Calculatrice cal = new Calculatrice();
-
-
+        
+        JFrame f = new JFrame("Essai de graphe");
+        JApplet applet = new Graphe();
+        f.getContentPane().add("Center", applet);
+        applet.init();
+        f.pack();
+        f.setSize(new Dimension(1024,768));
+        f.setVisible(true);
     }
 
 }
