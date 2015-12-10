@@ -116,12 +116,14 @@ public class Parser {
                     || read_char('6')
                     || read_char('7')
                     || read_char('8')
-                    || read_char('9')) {
+                    || read_char('9')
+                    || read_char('.')
+                    ) {
                 System.out.println("Je passe dans le while o/");
                 chiffre += lastChar;
             }
             System.out.println("Chiffre = " + chiffre);
-            result = new CST(Integer.parseInt(chiffre));
+            result = new CST(Double.parseDouble(chiffre));
         }
         return result;
     }

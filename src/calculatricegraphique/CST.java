@@ -11,9 +11,9 @@ package calculatricegraphique;
  */
 public class CST extends EXPR {
 
-    public int value;
+    public double value;
 
-    public CST(int value) {
+    public CST(double value) {
         this.value = value;
     }
 

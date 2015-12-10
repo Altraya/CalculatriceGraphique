@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,11 +24,13 @@ import javax.swing.JPanel;
  *
  * @author Karakayn
  */
-public class Calculatrice extends JFrame {
+public class Calculatrice extends JFrame implements KeyListener {
 
     private JPanel container = new JPanel();
     //Tableau stockant les éléments à afficher dans la calculatrice
     String[] tab_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "=", "C", "+", "-", "*", "/"};
+    // Tableau avec les éléments permis par une écriture sur clavier
+    String[] allowed_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "+", "-", "*", "/"};
     //Un bouton par élément à afficher
     JButton[] tab_button = new JButton[tab_string.length];
     private JLabel ecran = new JLabel();
@@ -50,9 +53,15 @@ public class Calculatrice extends JFrame {
         //On ajoute le conteneur
         this.setContentPane(container);
         this.setVisible(true);
-    }
+        
+        // On met le container comme listener
+        container.addKeyListener(this);
+        container.setFocusable(true);
 
+    }
     private void initComposant() {
+        
+        
         //On définit la police d'écriture à utiliser
         Font police = new Font("Arial", Font.BOLD, 20);
         ecran = new JLabel("0");
@@ -74,7 +83,8 @@ public class Calculatrice extends JFrame {
         for (int i = 0; i < tab_string.length; i++) {
             tab_button[i] = new JButton(tab_string[i]);
             tab_button[i].setPreferredSize(dim);
-
+            tab_button[i].setFocusable(false);
+            
             switch (i) {
                 //Pour chaque élément situé à la fin du tableau
                 //et qui n'est pas un chiffre
@@ -128,7 +138,44 @@ public class Calculatrice extends JFrame {
         container.add(chiffre, BorderLayout.CENTER);
         container.add(operateur, BorderLayout.EAST);
     }
-
+    
+    // Listener attribute for key press
+    @Override
+    public void keyTyped(KeyEvent e) {}
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        String typedString = String.valueOf(e.getKeyChar());
+        if (Arrays.asList(allowed_string).contains(typedString))
+        {
+            String str = ecran.getText() + typedString;
+            if (update) {
+                update = false;
+                System.out.println("Passe update a false");
+            } else if (ecran.getText().equals("0")) {
+                str = String.valueOf(e.getKeyChar());
+            }            
+            System.out.println(String.valueOf(e.getKeyChar()));
+            expression = str;
+            ecran.setText(str);
+        }
+        else if (e.getKeyCode()==KeyEvent.VK_ENTER){
+            System.out.println("enter event");
+            update = true;
+            clicOperateur = false;
+            EXPR exp;
+            System.out.println("Expression : " + expression);
+            exp = Parser.on(expression);
+            System.out.println("Result = " + exp.eval());
+            resultPrec = exp.eval();
+            ecran.setText("" + exp.eval());             
+        }         
+    }
+    
+    @Override
+    public void keyReleased(KeyEvent e) {}
+    
+    
     //Listener utilisé pour recevoir l'expression
     class ExprListener implements ActionListener {
 
