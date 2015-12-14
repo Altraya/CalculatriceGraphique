@@ -73,7 +73,7 @@ public class Parser {
         char op;
         //System.out.println("Last char : " + lastChar);
         //System.out.println("Cur : " + cur);
-        if (read_char('+') || read_char('-')) {
+        if (read_char('+') || read_char('-') ) {
             //System.out.println("Read_e_u : read char passé !");
             op = lastChar;
             //System.out.println("OP = " + op);
@@ -90,7 +90,50 @@ public class Parser {
             } else {
                 result = new NEG(right);
             }
-        } else {
+        } else if(read_char('c')&&read_char('o')&&read_char('s')&&read_char('(')){
+            right=read_e();
+             if (right == null) {
+                System.out.println("La partie droite dans read_e_u est null");
+                error();
+            }
+             result= new COS(right);
+        }else if(read_char('s')&&read_char('i')&&read_char('n')&&read_char('(')){
+            right=read_e();
+             if (right == null) {
+                System.out.println("La partie droite dans read_e_u est null");
+                error();
+            }
+             result= new SIN(right);
+        }else if(read_char('t')&&read_char('a')&&read_char('n')&&read_char('(')){
+            right=read_e();
+             if (right == null) {
+                System.out.println("La partie droite dans read_e_u est null");
+                error();
+            }
+             result= new TAN(right);
+        }else if(read_char('e')&&read_char('x')&&read_char('p')&&read_char('(')){
+            right=read_e();
+             if (right == null) {
+                System.out.println("La partie droite dans read_e_u est null");
+                error();
+            }
+             result= new EXP(right);
+        }else if(read_char('l')&&read_char('o')&&read_char('g')&&read_char('(')){
+            right=read_e();
+             if (right == null) {
+                System.out.println("La partie droite dans read_e_u est null");
+                error();
+            }
+             result= new LOG(right);
+        }else if(read_char('p')&&read_char('i')){
+            right=read_e();
+             if (right == null) {
+                System.out.println("La partie droite dans read_e_u est null");
+                error();
+            }
+              result =  new CST(Math.PI);
+        }
+        else {
             result = read_cst();
         }
         //System.out.println("Dans read_e_u : result = " + result);

@@ -14,6 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,9 +31,9 @@ public class Calculatrice extends JFrame implements KeyListener {
 
     private JPanel container = new JPanel();
     //Tableau stockant les éléments à afficher dans la calculatrice
-    String[] tab_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "=", "C", "+", "-", "*", "/"};
+    String[] tab_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "=", "C", "+", "-", "*", "/","cos(","sin(","tan(","exp(","log(","hihi"};
     // Tableau avec les éléments permis par une écriture sur clavier
-    String[] allowed_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "+", "-", "*", "/"};
+    String[] allowed_string = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", ".", "+", "-", "*", "/","cos(","sin(","tan(","exp(","log(","(",")","hihi"};
     // Signes
     String[] signs_string = {"+", "-", "*", "/", "."};
     //Un bouton par élément à afficher
@@ -38,6 +41,7 @@ public class Calculatrice extends JFrame implements KeyListener {
     private JLabel ecran = new JLabel();
     private Dimension dim = new Dimension(50, 40);
     private Dimension dim2 = new Dimension(50, 31);
+    private Dimension dim3 = new Dimension(60, 40);
     private double chiffre1;
     private double resultPrec = 0; //Sert quand on a deja fait un calcul et qu'on remet un operateur derrière pour continuer
     private boolean clicOperateur = false, update = false;
@@ -45,7 +49,7 @@ public class Calculatrice extends JFrame implements KeyListener {
     private String expression = ""; //continent l'expression entiere entrée par l'utilisateur
 
     public Calculatrice() {
-        this.setSize(240, 260);
+        this.setSize(300, 450);
         this.setTitle("Calculatrice graphique");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -77,6 +81,8 @@ public class Calculatrice extends JFrame implements KeyListener {
         chiffre.setPreferredSize(new Dimension(165, 225));
         JPanel jEcr = new JPanel();
         jEcr.setPreferredSize(new Dimension(220, 30));
+        JPanel trigo = new JPanel();
+        trigo.setPreferredSize(new Dimension(165,225));
 
         //On parcourt le tableau initialisé
         //afin de créer nos boutons
@@ -124,6 +130,42 @@ public class Calculatrice extends JFrame implements KeyListener {
                     tab_button[i].setPreferredSize(dim2);
                     operateur.add(tab_button[i]);
                     break;
+                case 17:
+                    //tab_button[i].addActionListener(new CosListener());
+                    tab_button[i].addActionListener(new ExprListener());
+                    tab_button[i].setPreferredSize(dim3);
+                    trigo.add(tab_button[i]);
+                    break;
+                case 18:
+                    //tab_button[i].addActionListener(new SinListener());
+                    tab_button[i].addActionListener(new ExprListener());
+                    tab_button[i].setPreferredSize(dim3);
+                    trigo.add(tab_button[i]);
+                    break;
+                case 19:
+                    //tab_button[i].addActionListener(new TanListener());
+                    tab_button[i].addActionListener(new ExprListener());
+                    tab_button[i].setPreferredSize(dim3);
+                    trigo.add(tab_button[i]);
+                    break;
+                case 20:
+                    //tab_button[i].addActionListener(new ExpListener());
+                    tab_button[i].addActionListener(new ExprListener());
+                    tab_button[i].setPreferredSize(dim3);
+                    trigo.add(tab_button[i]);
+                    break;
+                case 21:
+                    //tab_button[i].addActionListener(new LogListener());
+                    tab_button[i].addActionListener(new ExprListener());
+                    tab_button[i].setPreferredSize(dim3);
+                    trigo.add(tab_button[i]);
+                    break;
+                case 22:
+                    //tab_button[i].addActionListener(new PiListener());
+                    tab_button[i].addActionListener(new HihiListener());
+                    tab_button[i].setPreferredSize(dim3);
+                    operateur.add(tab_button[i]);
+                    break;
                 default:
                     //Par défaut, ce sont les premiers éléments du tableau
                     //donc des chiffres, on affecte alors le bon listener
@@ -138,6 +180,7 @@ public class Calculatrice extends JFrame implements KeyListener {
         container.add(jEcr, BorderLayout.NORTH);
         container.add(chiffre, BorderLayout.CENTER);
         container.add(operateur, BorderLayout.EAST);
+        container.add(trigo,BorderLayout.WEST);
     }
     
     public String handleStringAdd(String in)
@@ -229,6 +272,14 @@ public class Calculatrice extends JFrame implements KeyListener {
             ecran.setText("" + e.eval());
         }
     }
+    
+        //Listener affecté au bouton Hihi
+    class HihiListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent arg0) {
+            playSound("hihi.wav");
+        }
+    }
 
     //Listener affecté au bouton de remise à zéro
     class ResetListener implements ActionListener {
@@ -240,5 +291,23 @@ public class Calculatrice extends JFrame implements KeyListener {
             operateur = "";
             ecran.setText("");
         }
+    }
+    
+    public static synchronized void playSound(final String url) {
+        new Thread(new Runnable() {
+        // The wrapper thread is unnecessary, unless it blocks on the
+        // Clip finishing; see comments.
+          public void run() {
+            try {
+                Clip clip = AudioSystem.getClip();
+                AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                Main.class.getResourceAsStream("music/" + url));
+                clip.open(inputStream);
+                clip.start(); 
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+          }
+        }).start();
     }
 }
